@@ -246,9 +246,10 @@ func (e *executor) registry() {
 	t := time.NewTimer(time.Second * 0) //初始立即执行
 	defer t.Stop()
 	req := &Registry{
-		RegistryGroup: "EXECUTOR",
-		RegistryKey:   e.opts.RegistryKey,
-		RegistryValue: "http://" + e.address,
+		RegistryGroup:   "EXECUTOR",
+		RegistryKey:     e.opts.RegistryKey,
+		RegistryValue:   e.address,
+		RegistryVersion: e.opts.RegistryVersion,
 	}
 	param, err := json.Marshal(req)
 	if err != nil {

@@ -1,27 +1,30 @@
 package xxl
 
 import (
-	"github.com/go-basic/ipv4"
 	"time"
+
+	"github.com/go-basic/ipv4"
 )
 
 type Options struct {
-	ServerAddr   string        `json:"server_addr"`   //调度中心地址
-	AccessToken  string        `json:"access_token"`  //请求令牌
-	Timeout      time.Duration `json:"timeout"`       //接口超时时间
-	ExecutorIp   string        `json:"executor_ip"`   //本地(执行器)IP(可自行获取)
-	ExecutorPort string        `json:"executor_port"` //本地(执行器)端口
-	RegistryKey  string        `json:"registry_key"`  //执行器名称
-	LogDir       string        `json:"log_dir"`       //日志目录
+	ServerAddr      string        `json:"server_addr"`     //调度中心地址
+	AccessToken     string        `json:"access_token"`    //请求令牌
+	Timeout         time.Duration `json:"timeout"`         //接口超时时间
+	ExecutorIp      string        `json:"executor_ip"`     //本地(执行器)IP(可自行获取)
+	ExecutorPort    string        `json:"executor_port"`   //本地(执行器)端口
+	RegistryKey     string        `json:"registry_key"`    //执行器名称
+	LogDir          string        `json:"log_dir"`         //日志目录
+	RegistryVersion string        `json:"registryVersion"` //执行器版本
 
 	l Logger //日志处理
 }
 
 func newOptions(opts ...Option) Options {
 	opt := Options{
-		ExecutorIp:   ipv4.LocalIP(),
-		ExecutorPort: DefaultExecutorPort,
-		RegistryKey:  DefaultRegistryKey,
+		ExecutorIp:      ipv4.LocalIP(),
+		ExecutorPort:    DefaultExecutorPort,
+		RegistryKey:     DefaultRegistryKey,
+		RegistryVersion: DefaultRegistryVersion,
 	}
 
 	for _, o := range opts {
@@ -38,8 +41,9 @@ func newOptions(opts ...Option) Options {
 type Option func(o *Options)
 
 var (
-	DefaultExecutorPort = "9999"
-	DefaultRegistryKey  = "golang-jobs"
+	DefaultExecutorPort    = "9999"
+	DefaultRegistryKey     = "golang-jobs"
+	DefaultRegistryVersion = "1.0"
 )
 
 // ServerAddr 设置调度中心地址
@@ -81,5 +85,11 @@ func RegistryKey(registryKey string) Option {
 func SetLogger(l Logger) Option {
 	return func(o *Options) {
 		o.l = l
+	}
+}
+
+func RegistryVersion(registryVersion string) Option {
+	return func(o *Options) {
+		o.RegistryVersion = registryVersion
 	}
 }

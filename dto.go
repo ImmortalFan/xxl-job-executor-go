@@ -10,9 +10,10 @@ type res struct {
 
 // Registry 注册参数
 type Registry struct {
-	RegistryGroup string `json:"registryGroup"`
-	RegistryKey   string `json:"registryKey"`
-	RegistryValue string `json:"registryValue"`
+	RegistryGroup   string `json:"registryGroup"`
+	RegistryKey     string `json:"registryKey"`
+	RegistryValue   string `json:"registryValue"`
+	RegistryVersion string `json:"registryVersion"`
 }
 
 //执行器执行完任务后，回调任务结果时使用
